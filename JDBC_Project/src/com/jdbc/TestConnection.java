@@ -15,7 +15,7 @@ public class TestConnection {
 		// step 2. Make Connection to the database
 		Connection comn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc_db", "root", "nir13072001@N");
 
-		System.out.println("Connection Established Successflly ...." + comn.getCatalog());
+		System.out.println("Connection Established Successfully ...." + comn.getCatalog());
 
 		// step 3. create Statement and get ResultSet or insert, update and delete
 		// records
@@ -31,6 +31,8 @@ public class TestConnection {
 			System.out.println(rs.getString("name"));
 			System.out.println(rs.getDouble("Salary"));
 			System.out.println(rs.getString("department"));
+			
+			System.out.println("-------------------------------");
 		}
 
 	}
