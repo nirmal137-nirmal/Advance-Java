@@ -46,7 +46,8 @@ con.close();
 
 This project covers the basic CRUD operations:
 
-Operation	SQL Command	JDBC Method
+## Operation	SQL Command	JDBC Method
+
 Create	INSERT	executeUpdate()
 Read	SELECT	executeQuery()
 Update	UPDATE	executeUpdate()
