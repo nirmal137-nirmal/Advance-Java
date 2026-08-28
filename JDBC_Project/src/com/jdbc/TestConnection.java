@@ -9,7 +9,7 @@ public class TestConnection {
 
 	public static void main(String[] args) throws Exception {
 
-		// Step 1. Load Driver Class
+		// Step 1. Load Driver Class  //Class.forName --> JVM mein class Load krna 
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		// step 2. Make Connection to the database
