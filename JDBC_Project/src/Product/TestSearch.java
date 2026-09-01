@@ -9,11 +9,20 @@ public class TestSearch {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = null;
 		
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/product_db" , "root", "nir13072001@N");
+		try {
+			
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+	
+		 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/product_db" , "root", "nir13072001@N");
+		 
+		 con.setAutoCommit(false);
 		
 		Statement stmt = con.createStatement();
+		
+		con.commit();
 		
 		ResultSet rs = stmt.executeQuery("Select * from product ");
 		
@@ -24,6 +33,16 @@ public class TestSearch {
 			System.out.println("product Quantity :" + rs.getString("Quantity"));
 			System.out.println("Product Category :" + rs.getString("category"));
 			System.out.println("--------------------------------------------------");
+		}
+		
+		} catch (Exception e) {
+			
+			System.out.println("Exception :" + e.getMessage());
+			
+			con.rollback();
+			// TODO: handle exception
+		}finally {
+			con.close();
 		}
 	}
 
