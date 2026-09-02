@@ -42,7 +42,6 @@ public class UserModel {
 		}
 
 	}
-	
 
 	public void delete(int id) throws Exception {
 
@@ -69,6 +68,42 @@ public class UserModel {
 			conn.rollback();
 		} finally {
 			conn.close();
+		}
+	}
+
+	public void update(int id, String firstName, String lastName, String loginId, String Password, Date dob) throws Exception {
+
+		Connection con = null;
+			
+		try {
+
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_db", "root", "nir13072001@N");
+
+			con.setAutoCommit(false);
+
+			PreparedStatement pstmt = con.prepareStatement(
+					"UPDATE users SET firstName=?, lastName=?, loginId=?, password=?, dob=? WHERE id=?");
+			
+			pstmt.setString(1, firstName);
+			pstmt.setString(2, lastName);
+			pstmt.setString(3, loginId);
+			pstmt.setString(4, Password);
+			pstmt.setDate(5, new java.sql.Date(dob.getTime()));
+			pstmt.setInt(6, id);
+			
+			int i = pstmt.executeUpdate();
+			con.commit();
+			
+			System.out.println("Data Updated Sucessfully " + i +  " Row Effected ");
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			con.rollback();
+			
+		}finally {
+			con.close();
 		}
 	}
 

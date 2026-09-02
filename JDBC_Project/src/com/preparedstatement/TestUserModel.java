@@ -7,7 +7,8 @@ public class TestUserModel {
 	public static void main(String[] args) throws Exception {
 
 //		testAdd();
-		testDelete();
+//		testDelete();
+		testUpdate();
 
 	}
 
@@ -26,6 +27,14 @@ public class TestUserModel {
 		UserModel model = new UserModel();
 		model.delete(114);
 
+	}
+
+	public static void testUpdate() throws Exception {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		UserModel model = new UserModel();
+		model.update(112, "Tanuj", "Ingale", "tanuj@gmail.com", "tanuj@123", sdf.parse("1999-02-17"));
 	}
 
 }
