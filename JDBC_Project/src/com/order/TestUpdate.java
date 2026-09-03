@@ -28,7 +28,7 @@ public class TestUpdate {
 			System.out.println("Data updated Sucessfully.." + i +  "Row Effected");
 			
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			con.rollback();
 			

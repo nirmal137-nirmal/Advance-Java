@@ -7,6 +7,35 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class UserModel {
+	
+	// Create Table
+	
+	public void createTable() throws Exception {
+		
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_db", "root", "nir13072001@N");
+			
+			con.setAutoCommit(false);
+			
+			PreparedStatement pstmt = con.prepareStatement("create table Employee(employeeId int primary key, employeeName varchar(40), department varchar(40), salary double)");
+			
+			int i = pstmt.executeUpdate();
+			con.commit();
+			System.out.println("table Created Sucessfully.....");
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			con.rollback();
+		}
+		
+	}
+	
+	// Insert Data Into Table
 
 	public void add(int id, String firstName, String lastName, String loginId, String password, Date dob)
 			throws Exception {
@@ -42,6 +71,9 @@ public class UserModel {
 		}
 
 	}
+	
+	// Delete Data form table
+	
 
 	public void delete(int id) throws Exception {
 

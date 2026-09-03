@@ -8,7 +8,9 @@ public class TestUserModel {
 
 //		testAdd();
 //		testDelete();
-		testUpdate();
+//		testUpdate();
+		testCreateTable();
+		
 
 	}
 
@@ -35,6 +37,14 @@ public class TestUserModel {
 
 		UserModel model = new UserModel();
 		model.update(112, "Tanuj", "Ingale", "tanuj@gmail.com", "tanuj@123", sdf.parse("1999-02-17"));
+	}
+	
+	public static void testCreateTable() throws Exception {
+		
+		UserModel model = new UserModel();
+		
+		model.createTable();
+		
 	}
 
 }
