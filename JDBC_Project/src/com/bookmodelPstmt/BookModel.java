@@ -138,8 +138,8 @@ public class BookModel {
 		}
 
 	}
-	
-	//Delete
+
+	// Delete
 
 	public void delete(int bookId) throws Exception {
 
@@ -170,32 +170,41 @@ public class BookModel {
 		}
 
 	}
-	
-	//Search
-	
+
+	// Search
+
 	public void Search(BookModelBean bean) throws Exception {
-		
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/book_db", "root", "nir13072001@N");
-		
-		PreparedStatement pstmt = con.prepareStatement("Select * from book");
-		
-		ResultSet rs = pstmt.executeQuery();
-		
-		while(rs.next()) {
-			
-			System.out.println("Book Id  : " + rs.getInt("bookId"));
-			System.out.println("Book Title :  " + rs.getString("title"));
-			System.out.println("Book Author : " + rs.getString("author"));
-			System.out.println("Price :" +  rs.getDouble("price"));
-			System.out.println("Publication Year " + rs.getInt("publicationYear"));
-			
-			System.out.println("-----------------------------------");
+
+		Connection con = null;
+
+		try {
+
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/book_db", "root", "nir13072001@N");
+
+			PreparedStatement pstmt = con.prepareStatement("Select * from book");
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				System.out.println("Book Id  : " + rs.getInt("bookId"));
+				System.out.println("Book Title :  " + rs.getString("title"));
+				System.out.println("Book Author : " + rs.getString("author"));
+				System.out.println("Price :" + rs.getDouble("price"));
+				System.out.println("Publication Year " + rs.getInt("publicationYear"));
+
+				System.out.println("-----------------------------------");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			con.rollback();
+		} finally {
+			con.close();
 		}
-		
-		 
-		
+
 	}
 
 }
