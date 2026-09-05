@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mysql.cj.jdbc.JdbcConnection;
 
 public class UserModel {
 
@@ -84,7 +88,7 @@ public class UserModel {
 	public void add(UserBean bean) throws Exception {
 
 		Connection con = null;
-		
+
 		UserBean existBean = findByLoginID(bean.getLoginId());
 		if (existBean != null) {
 			throw new RuntimeException("loginId already exist");
@@ -245,11 +249,11 @@ public class UserModel {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/userdata_db", "root", "nir13072001@N");
 
 			conn.setAutoCommit(false);
-			
+
 			PreparedStatement pstmt = conn.prepareStatement("select * from user where loginId = ?");
 
 			pstmt.setString(1, loginId);
-			
+
 			conn.commit();
 
 			ResultSet rs = pstmt.executeQuery();
@@ -262,7 +266,7 @@ public class UserModel {
 				bean.setLoginId(rs.getString("loginId"));
 				bean.setDob(rs.getDate("dob"));
 				bean.setPassword(rs.getString("password"));
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -270,13 +274,13 @@ public class UserModel {
 			conn.rollback();
 		} finally {
 			conn.close();
-		
+
 		}
 
 		return bean;
 
 	}
-	
+
 	public UserBean authenticate(String loginId, String password) throws Exception {
 
 		UserBean bean = new UserBean();
@@ -291,4 +295,75 @@ public class UserModel {
 
 	}
 
+	public List<UserBean> search(UserBean bean, int pageNo, int pageSize) throws Exception {
+
+		Connection con = null;
+
+		List<UserBean> list = new ArrayList<UserBean>();
+
+		StringBuffer sql = new StringBuffer("SELECT * FROM user WHERE 1 = 1 ");
+
+		if (bean != null) {
+
+			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+				sql.append(" AND firstName LIKE '" + bean.getFirstName() + "%' ");
+			}
+
+			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
+				sql.append(" AND lastName LIKE '" + bean.getLastName() + "%' ");
+			}
+
+			if (bean.getLoginId() != null && bean.getLoginId().length() > 0) {
+				sql.append(" AND loginId LIKE '" + bean.getLoginId() + "%' ");
+			}
+
+			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+				sql.append(" AND dob = '" + new java.sql.Date(bean.getDob().getTime()) + "' ");
+			}
+
+			if (bean.getPassword() != null && bean.getPassword().length() > 0) {
+				sql.append(" AND password LIKE '" + bean.getPassword() + "%' ");
+			}
+		}
+
+		if (pageSize > 0) {
+
+			int index = (pageNo - 1) * pageSize;
+
+			sql.append(" LIMIT " + index + ", " + pageSize);
+		}
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/userdata_db", "root", "nir13072001@N");
+			
+			
+
+			System.out.println("SQL Search Query ====> " + sql.toString());
+
+			PreparedStatement pstmt = con.prepareStatement(sql.toString());
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				bean = new UserBean();
+
+				bean.setId(rs.getInt("id"));
+				bean.setFirstName(rs.getString("firstName"));
+				bean.setLastName(rs.getString("lastName"));
+				bean.setLoginId(rs.getString("loginId"));
+				bean.setDob(rs.getDate("dob"));
+				bean.setPassword(rs.getString("password"));
+
+				list.add(bean);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return list;
+	}
 }
