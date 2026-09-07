@@ -8,15 +8,15 @@ public class JDBCDataSource {
 
 	public static Connection getConnection() {
 
-		ResourceBundle rb = ResourceBundle.getBundle("com.rays.jdbc.bundle.system");
+		ResourceBundle rb = ResourceBundle.getBundle("com.bundle.app");
 
 		Connection conn = null;
 
 		try {
 
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName(rb.getString("driver"));
 
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/userdata_db", "root", "nir13072001@N");
+			conn = DriverManager.getConnection(rb.getString("url"), rb.getString("username"), rb.getString("password"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
