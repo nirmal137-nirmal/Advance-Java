@@ -9,6 +9,7 @@ import com.doctorBundle.JDBCDataSource;
 
 public class DoctorModel {
 
+	// Create Table
 	public static void createTable() throws Exception {
 
 		Connection con = null;
@@ -35,6 +36,7 @@ public class DoctorModel {
 		}
 	}
 
+	// Create Pk
 	public DoctorBean nextPk() throws Exception {
 
 		Connection con = null;
@@ -69,38 +71,99 @@ public class DoctorModel {
 		return null;
 
 	}
-	
+
+	// Add
 	public static void add(DoctorBean bean) throws Exception {
-		
+
 		Connection con = null;
-		
+
 		try {
 			con = JDBCDataSource.getConnection();
-			
+
 			con.setAutoCommit(false);
-			
+
 			PreparedStatement pstmt = con.prepareStatement("Insert Into doctor values (?,?,?,?,?)");
-			
+
 			pstmt.setLong(1, bean.getDoctorId());
 			pstmt.setString(2, bean.getDoctorName());
 			pstmt.setString(3, bean.getSpecialization());
 			pstmt.setInt(4, bean.getExperience());
-			pstmt.setString(5, bean.getContactNo());
-			
+			pstmt.setString(5, bean.getContactNumber());
+
 			int i = pstmt.executeUpdate();
-			
+
 			con.commit();
-			
+
 			System.out.println("Data Inserted SuccessFully... " + i + " Row Effected ");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			con.rollback();
+		} finally {
+			con.close();
+		}
+
+	}
+
+	// Update
+
+	public static void Update(DoctorBean bean) throws SQLException {
+		Connection con = null;
+
+		try {
+			con = JDBCDataSource.getConnection();
+
+			con.setAutoCommit(false);
+
+			PreparedStatement pstmt = con.prepareStatement(
+					"Update Doctor set DoctorName = ?, Specialization = ?, Experience = ?, ContactNumber = ? Where DoctorId = ? ");
+
+			pstmt.setString(1, bean.getDoctorName());
+			pstmt.setString(2, bean.getSpecialization());
+			pstmt.setInt(3, bean.getExperience());
+			pstmt.setString(4, bean.getContactNumber());
+			pstmt.setLong(5, bean.getDoctorId());
+
+			int i = pstmt.executeUpdate();
+
+			con.commit();
+
+			System.out.println("Data Updated SuccessFully... " + i + " Row Effected...");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			con.rollback();
+		} finally {
+			con.close();
+		}
+	}
+
+	// Delete
+
+	public static void Delete(int doctorId) throws Exception {
+
+		Connection con = null;
+
+		try {
+			con = JDBCDataSource.getConnection();
+
+			con.setAutoCommit(false);
 			
+			PreparedStatement pstmt = con.prepareStatement("Delete From Doctor where DoctorId = ? ");
 			
-			
+			 pstmt.setInt(1, doctorId);
+			 
+			 int i = pstmt.executeUpdate();
+			 
+			 con.commit();
+			 System.out.println("Data Deleted Successfully... " + i + " Row Effected ");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			con.rollback();
 		}finally {
 			con.close();
 		}
-		
+
 	}
 }

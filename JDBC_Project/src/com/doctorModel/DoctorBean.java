@@ -6,7 +6,7 @@ public class DoctorBean {
 	private String doctorName;
 	private String specialization;
 	private int experience;
-	private String contactNo;
+	private String contactNumber;
 
 	public long getDoctorId() {
 		return doctorId;
@@ -40,12 +40,12 @@ public class DoctorBean {
 		this.experience = experience;
 	}
 
-	public String getContactNo() {
-		return contactNo;
+	public String getContactNumber() {
+		return contactNumber;
 	}
 
-	public void setContactNo(String contactNo) {
-		this.contactNo = contactNo;
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
 	}
 
 }
