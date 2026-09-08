@@ -279,6 +279,7 @@ public class UserModel {
 
 	}
 
+	// Authentication 
 	public UserBean authenticate(String loginId, String password) throws Exception {
 
 		UserBean bean = new UserBean();
@@ -292,6 +293,8 @@ public class UserModel {
 		return null;
 
 	}
+	
+	// Search Mehtod 
 
 	public List<UserBean> search(UserBean bean, int pageNo, int pageSize) throws Exception {
 
