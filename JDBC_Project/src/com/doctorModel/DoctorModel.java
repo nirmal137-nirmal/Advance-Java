@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.doctorBundle.JDBCDataSource;
+import com.usermodel.UserBean;
 
 public class DoctorModel {
 
@@ -148,22 +151,88 @@ public class DoctorModel {
 			con = JDBCDataSource.getConnection();
 
 			con.setAutoCommit(false);
-			
+
 			PreparedStatement pstmt = con.prepareStatement("Delete From Doctor where DoctorId = ? ");
-			
-			 pstmt.setInt(1, doctorId);
-			 
-			 int i = pstmt.executeUpdate();
-			 
-			 con.commit();
-			 System.out.println("Data Deleted Successfully... " + i + " Row Effected ");
+
+			pstmt.setInt(1, doctorId);
+
+			int i = pstmt.executeUpdate();
+
+			con.commit();
+			System.out.println("Data Deleted Successfully... " + i + " Row Effected ");
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			con.rollback();
-		}finally {
+		} finally {
 			con.close();
 		}
 
+	}
+	
+	// Search 
+	
+	public List search(DoctorBean bean, int pageNo, int pageSize) throws Exception {
+		
+		StringBuffer sql = new StringBuffer("Select * from Doctor where 1=1");
+		// Where 1=1 is sql Injection  to used Sql Querry Append Karnr ke lite SQL Injection Ka Use krte hai
+		List list = new ArrayList();
+		Connection con = null;
+		
+		try {
+		
+			if(bean != null) {
+				if (bean.getDoctorId()> 0) {
+					sql.append(" and doctorId = " + bean.getDoctorId());	
+				}
+				
+				if (bean.getDoctorName() != null && bean.getDoctorName().length() > 0) {
+					sql.append("and doctorName like ' " + bean.getDoctorName() +  "%'");
+				}
+				if (bean.getSpecialization() != null && bean.getSpecialization().length() > 0) {
+					sql.append("and Specialization like ' " + bean.getSpecialization() + " % '");
+				}
+				
+				if (bean.getExperience()  > 0) {
+					sql.append("and experience = " + bean.getExperience());
+				}
+				
+				if (bean.getContactNumber() != null && bean.getContactNumber().length() > 0) {
+					sql.append("and contactNumber = ' " + bean.getContactNumber() + " % '");
+					
+				}
+			}
+			
+			if (pageSize > 0) {
+				int index = (pageNo - 1) * pageSize;
+				sql.append("limit " + index + ", " + pageSize);
+			}
+			
+			System.out.println("sql ====> " + sql.toString());
+			con = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql.toString());
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				bean = new DoctorBean();
+				bean.setDoctorId(rs.getLong("DoctorId"));
+				bean.setDoctorName(rs.getString("DoctorName"));
+				bean.setSpecialization(rs.getString("Specialization"));
+				bean.setExperience(rs.getInt("Experience"));
+				bean.setContactNumber(rs.getString("DoctorNumber"));
+				list.add(bean);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			con.close();
+		}
+		
+		return list;
+		
 	}
 }
