@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserModel {
 
 	// Create Table
@@ -334,10 +333,8 @@ public class UserModel {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			
+
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/userdata_db", "root", "nir13072001@N");
-			
-			
 
 			System.out.println("SQL Search Query ====> " + sql.toString());
 
