@@ -1,5 +1,8 @@
 package com.hotelModel;
 
+import java.util.Iterator;
+import java.util.List;
+
 import com.usermodel.UserModel;
 
 public class TestHotel {
@@ -9,7 +12,8 @@ public class TestHotel {
 //		testNextPk();
 //		testAdd();
 //		testUpdate();
-		testDelete();
+//		testDelete();
+		testSearch();
 	}
 
 	public static void testNextPk() throws Exception {
@@ -53,6 +57,28 @@ public class TestHotel {
 
 		model.delete(6);
 
+	}
+	
+	public static void testSearch() throws Exception {
+		HotelModel model = new HotelModel();
+		HotelBean bean = new HotelBean();
+		
+		List list = model.search(bean, 1, 4);
+		
+		Iterator it = list.iterator();
+		
+		while (it.hasNext()) {
+			
+			bean = (HotelBean) it.next();
+			System.out.println("Hotel Id : " +bean.getHotelId());
+			System.out.println("Hotel Name : " +bean.getHotelName());
+			System.out.println("Hotel Location :" +bean.getLocation());
+			System.out.println("Hotel Rating :" +bean.getRating());
+			System.out.println("Hotel ContactNo : " +bean.getContactNo());
+			
+			System.out.println("----------------------------------------");
+		}
+		
 	}
 
 }

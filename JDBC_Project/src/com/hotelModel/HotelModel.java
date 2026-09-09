@@ -141,7 +141,7 @@ public class HotelModel {
 
 	// Search Method
 
-	public static void search(HotelBean bean, int pageNo, int pageSize) throws Exception {
+	public static List search(HotelBean bean, int pageNo, int pageSize) throws Exception {
 
 		Connection con = null;
 
@@ -150,6 +150,7 @@ public class HotelModel {
 		StringBuffer sql = new StringBuffer("Select * from hotel where 1=1"); // SQL Injection SQL Querry Ko Append Krne
 																				// Ke liye
 
+		try {
 		if (bean != null) {
 
 			if (bean.getHotelId() > 0) {
@@ -182,6 +183,22 @@ public class HotelModel {
 		
 		ResultSet rs = pstmt.executeQuery();
 		
+		while(rs.next()) {
+			bean = new HotelBean();
+			bean.setHotelId(rs.getLong("hotelId"));
+			bean.setHotelName(rs.getString("hotelName"));
+			bean.setLocation(rs.getString("location"));
+			bean.setRating(rs.getDouble("rating"));
+			bean.setContactNo(rs.getString("contactNo"));
+			list.add(bean);
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+			JDBCDataSource.trnRollback(con);
+		}finally {
+			JDBCDataSource.closeConnection(con);
+		}
+		return list;
 	}
 
 }
