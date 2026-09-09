@@ -176,7 +176,7 @@ public class DoctorModel {
 		StringBuffer sql = new StringBuffer("Select * from doctor where 1=1");
 		// Where 1=1 is sql Injection to used Sql Querry Append Karnr ke lite SQL
 		// Injection Ka Use krte hai
-		List list = new ArrayList();
+		List<DoctorBean> list = new ArrayList<DoctorBean>();
 		Connection con = null;
 
 		try {

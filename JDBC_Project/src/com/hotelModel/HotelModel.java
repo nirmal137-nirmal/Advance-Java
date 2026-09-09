@@ -3,6 +3,9 @@ package com.hotelModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.hotelBundle.JDBCDataSource;
 
@@ -134,6 +137,51 @@ public class HotelModel {
 			JDBCDataSource.closeConnection(con);
 		}
 
+	}
+
+	// Search Method
+
+	public static void search(HotelBean bean, int pageNo, int pageSize) throws Exception {
+
+		Connection con = null;
+
+		List<HotelBean> list = new ArrayList<HotelBean>();
+
+		StringBuffer sql = new StringBuffer("Select * from hotel where 1=1"); // SQL Injection SQL Querry Ko Append Krne
+																				// Ke liye
+
+		if (bean != null) {
+
+			if (bean.getHotelId() > 0) {
+				sql.append(" and hotelId = " + bean.getHotelId());
+			}
+			if (bean.getHotelName() != null && bean.getHotelName().length() > 0) {
+				sql.append("and hotelName like ' " + bean.getHotelName() + "% '");
+
+			}
+			if (bean.getLocation() != null && bean.getLocation().length() > 0) {
+				sql.append("and location like '" + bean.getLocation() + "% '");
+			}
+			if (bean.getRating() > 0) {
+				sql.append("and rating = " + bean.getRating());
+			}
+			if (bean.getContactNo() != null && bean.getContactNo().length() > 0) {
+				sql.append("and location like '" + bean.getContactNo() + "% '");
+			}
+
+		}
+
+		if(pageSize > 0) {
+			int index = (pageNo - 1) * pageSize;
+			sql.append(" limit " + index + " , " + pageSize);
+		}
+		
+		System.out.println("sql ====> " + sql.toString());
+		con =JDBCDataSource.getConnection();
+		PreparedStatement pstmt = con.prepareStatement(sql.toString());
+		
+		ResultSet rs = pstmt.executeQuery();
+		
 	}
 
 }

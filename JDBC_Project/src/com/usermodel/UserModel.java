@@ -302,7 +302,7 @@ public class UserModel {
 
 		List<UserBean> list = new ArrayList<UserBean>();
 
-		StringBuffer sql = new StringBuffer("SELECT * FROM user WHERE 1 = 1 ");
+		StringBuffer sql = new StringBuffer("SELECT * FROM user WHERE 1 = 1 "); // Sql Injection 
 
 		if (bean != null) {
 
@@ -360,7 +360,7 @@ public class UserModel {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		return list;

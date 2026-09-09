@@ -75,7 +75,7 @@ public class TestDoctor {
 		DoctorModel model = new DoctorModel();
 		DoctorBean bean = new DoctorBean();
 
-		List list = model.search(bean, 1, 5);
+		List list = model.search(bean, 1, 2);
 
 		Iterator it = list.iterator();
 
