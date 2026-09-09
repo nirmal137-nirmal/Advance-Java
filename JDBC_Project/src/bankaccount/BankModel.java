@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.mysql.cj.jdbc.JdbcStatement;
+
 public class BankModel {
 
 	public static void createTable() throws Exception {
@@ -25,9 +27,9 @@ public class BankModel {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			con.rollback();
+			JDBCDataSource.trnRollback(con);
 		} finally {
-			con.close();
+			JDBCDataSource.closeConnection(con);
 		}
 
 	}
@@ -56,9 +58,9 @@ public class BankModel {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			con.rollback();
+			JDBCDataSource.trnRollback(con);
 		} finally {
-			con.close();
+			JDBCDataSource.closeConnection(con);
 		}
 	}
 	// Update Mehtod 
@@ -115,10 +117,10 @@ public class BankModel {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			con.rollback();
+			JDBCDataSource.trnRollback(con);
 			
 		}finally {
-			con.close();
+			JDBCDataSource.closeConnection(con);
 		}
 	}
 	

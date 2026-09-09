@@ -13,10 +13,10 @@ public class TestDoctor {
 
 //		testCreateTable();
 //		testNextPk();
-//		testAdd();
+		testAdd();
 //		testUpdate();
 //		testDelete();
-		testSearch();
+//		testSearch();
 	}
 
 	public static void testCreateTable() throws Exception {

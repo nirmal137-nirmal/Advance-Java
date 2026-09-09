@@ -32,9 +32,9 @@ public class DoctorModel {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			con.rollback();
+			JDBCDataSource.trnRollBack(con);
 		} finally {
-			con.close();
+			JDBCDataSource.closeConnection(con);
 		}
 	}
 
@@ -65,9 +65,9 @@ public class DoctorModel {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			con.rollback();
+			JDBCDataSource.trnRollBack(con);
 		} finally {
-			con.close();
+			JDBCDataSource.closeConnection(con);
 		}
 
 		return null;
@@ -100,9 +100,9 @@ public class DoctorModel {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			con.rollback();
+			JDBCDataSource.trnRollBack(con);
 		} finally {
-			con.close();
+			JDBCDataSource.closeConnection(con);
 		}
 
 	}
@@ -134,9 +134,9 @@ public class DoctorModel {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			con.rollback();
+			JDBCDataSource.trnRollBack(con);
 		} finally {
-			con.close();
+			JDBCDataSource.closeConnection(con);
 		}
 	}
 
@@ -162,9 +162,9 @@ public class DoctorModel {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			con.rollback();
+			JDBCDataSource.trnRollBack(con);
 		} finally {
-			con.close();
+			JDBCDataSource.closeConnection(con);
 		}
 
 	}

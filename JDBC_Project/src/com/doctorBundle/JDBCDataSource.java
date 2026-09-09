@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ResourceBundle;
 
-public class JDBCDataSource {
+public final class JDBCDataSource {
 
 	public static Connection getConnection() {
 
@@ -23,6 +23,22 @@ public class JDBCDataSource {
 
 		return con;
 
+	}
+
+	public static void trnRollBack(Connection con) {
+		try {
+			con.rollback();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void closeConnection(Connection con) {
+		try {
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
