@@ -81,11 +81,11 @@ public class TestDoctor {
 
 		while (it.hasNext()) {
 			bean = (DoctorBean) it.next();
-			System.out.println(bean.getDoctorId());
-			System.out.println(bean.getDoctorName());
-			System.out.println(bean.getSpecialization());
-			System.out.println(bean.getExperience());
-			System.out.println(bean.getContactNumber());
+			System.out.println("Doctor Id : " +bean.getDoctorId());
+			System.out.println("Doctor Name : " +bean.getDoctorName());
+			System.out.println("Doctor Specialization : " + bean.getSpecialization());
+			System.out.println("Doctor Experience : " + bean.getExperience());
+			System.out.println("Doctor Contact NO : " +bean.getContactNumber());
 
 			System.out.println("-----------------------");
 		}

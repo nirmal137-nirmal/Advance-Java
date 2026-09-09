@@ -25,7 +25,7 @@ public class TestSearch {
 			System.out.println(rs.getString("email"));
 			System.out.println(rs.getString("mobileNo"));
 			System.out.println(rs.getString("course"));
-			
+					
 			System.out.println("---------------------------");
 			
 		}

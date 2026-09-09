@@ -1,4 +1,4 @@
-package com.jdbc.util;
+package com.hotelBundle;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,23 +8,29 @@ public class JDBCDataSource {
 
 	public static Connection getConnection() {
 
-		ResourceBundle rb = ResourceBundle.getBundle("com.bundle.app");
+		Connection con = null;
 
-		Connection conn = null;
+		ResourceBundle rb = ResourceBundle.getBundle("com.hotelBundle.hotel");
 
 		try {
-
 			Class.forName(rb.getString("driver"));
 
-			conn = DriverManager.getConnection(rb.getString("url"), rb.getString("username"), rb.getString("password"));
+			con = DriverManager.getConnection(rb.getString("url"), rb.getString("username"), rb.getString("password"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 
-		return conn;
+		return con;
+	}
 
+	public static void trnRollback(Connection con) {
+		try {
+			con.rollback();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void closeConnection(Connection con) {
@@ -35,11 +41,4 @@ public class JDBCDataSource {
 		}
 	}
 
-	public static void trnRollBack(Connection con) {
-		try {
-			con.rollback();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }
