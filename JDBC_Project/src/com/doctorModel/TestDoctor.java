@@ -1,11 +1,10 @@
 package com.doctorModel;
 
-import java.sql.SQLException;
+
 import java.util.Iterator;
 import java.util.List;
 
-import com.usermodel.UserBean;
-import com.usermodel.UserModel;
+
 
 public class TestDoctor {
 
