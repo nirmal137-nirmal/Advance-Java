@@ -75,7 +75,7 @@ A transaction is a group of SQL operations that are executed as a single unit. E
 - `rollback()` – Undoes changes if an error occurs.
 -  close()  -- close Connection to database.
 
--  1. JDBC (Java Database Connectivity)
+1. JDBC (Java Database Connectivity)
 JDBC Architecture
 JDBC Drivers
 Connection with Database
