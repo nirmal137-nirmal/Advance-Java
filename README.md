@@ -65,6 +65,9 @@ This project demonstrates **Transaction Handling in JDBC** using Java and MySQL.
 
 A transaction is a group of SQL operations that are executed as a single unit. Either all operations are completed successfully, or none of them are applied.
 
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
 ## 🔄 Transaction Methods
 
 - `setAutoCommit(false)` – Disables automatic commit.
